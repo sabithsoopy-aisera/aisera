@@ -10,11 +10,11 @@ type SortCriteria struct {
 }
 
 type Filter struct {
-	Fields          []string       `json:"fields"`
-	SortCriteria    []SortCriteria `json:"sortCriteria"`
-	MaxCount        int            `json:"maxCount"`
-	NeedsTotalCount bool           `json:"needsTotalCount"`
-	Offset          int            `json:"offset"`
+	Fields          []string       `json:"fields,omitempty"`
+	SortCriteria    []SortCriteria `json:"sortCriteria,omitempty"`
+	MaxCount        int            `json:"maxCount,omitempty"`
+	NeedsTotalCount bool           `json:"needsTotalCount,omitempty"`
+	Offset          int            `json:"offset,omitempty"`
 }
 
 func (f Filter) JSONReader() io.Reader {

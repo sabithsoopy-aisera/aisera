@@ -18,9 +18,7 @@ func (o offering) Bots(ctx context.Context) (bots Bots, err error) {
 	filter := Filter{
 		Fields: []string{"id", "name", "domain", "bot_type", "config"},
 		SortCriteria: []SortCriteria{
-			{
-				Field: "name",
-			},
+			{Field: "name"},
 		},
 	}
 	_, err = o.post(ctx, "/aisera/bots", filter.JSONReader(), &bots, headers)
