@@ -5,8 +5,8 @@ import (
 )
 
 type SortCriteria struct {
-	Field     string `json:"field"`
-	Ascending bool   `json:"ascending"`
+	Field     string `json:"field,omitempty"`
+	Ascending bool   `json:"ascending,omitempty"`
 }
 
 type Filter struct {

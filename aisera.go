@@ -1,7 +1,6 @@
 package aisera
 
 import (
-	"context"
 	"fmt"
 	"net/url"
 	"os"
@@ -9,10 +8,6 @@ import (
 )
 
 const DefaultBaseURL = "https://demo9.login.aisera.cloud"
-
-type Offerings interface {
-	Bots(ctx context.Context) (Bots, error)
-}
 
 func URL(path string) (*url.URL, error) {
 	baseURL := DefaultBaseURL
