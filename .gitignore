@@ -2,3 +2,4 @@ vendor
 .envrc
 example
 report.xml
+test-results
