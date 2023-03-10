@@ -64,7 +64,8 @@ func Login(ctx context.Context, loginRequest LoginRequest) (Offerings, error) {
 		return nil, errors.New("could not get an authentication key")
 	}
 	return offering{
-		auhtKey: authKey,
+		auhtKey:       authKey,
+		loginResponse: loginResponse,
 	}, nil
 }
 

@@ -13,7 +13,7 @@ func init() {
 	if os.Getenv("DEBUG") != "" {
 		logHandler.Level = slog.LevelDebug
 	}
-	logger = slog.New(logHandler.NewJSONHandler(os.Stderr))
+	logger = slog.New(logHandler.NewJSONHandler(os.Stderr)).WithGroup("aisera")
 }
 
 func SetLogger(l *slog.Logger) {

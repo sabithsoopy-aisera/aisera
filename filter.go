@@ -9,8 +9,16 @@ type SortCriteria struct {
 	Ascending bool   `json:"ascending,omitempty"`
 }
 
+type Criteria struct {
+	Field    []string `json:"field,omitempty"`
+	Operator string   `json:"operator,omitempty"`
+	Operand  string   `json:"operand,omitempty"`
+	CanImply bool     `json:"canImply,omitempty"`
+}
+
 type Filter struct {
 	Fields          []string       `json:"fields,omitempty"`
+	Criteria        []Criteria     `json:"criteria,omitempty"`
 	SortCriteria    []SortCriteria `json:"sortCriteria,omitempty"`
 	MaxCount        int            `json:"maxCount,omitempty"`
 	NeedsTotalCount bool           `json:"needsTotalCount,omitempty"`

@@ -38,3 +38,11 @@ func Parse(req *http.Request, val any) (int, error) {
 	defer resp.Body.Close()
 	return resp.StatusCode, JSONReaderToVal(resp.Body, val)
 }
+
+func addHeaders(req *http.Request, headers http.Header) {
+	for k, vs := range headers {
+		for i := range vs {
+			req.Header.Add(k, vs[i])
+		}
+	}
+}

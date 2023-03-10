@@ -6,7 +6,9 @@ import (
 	"strings"
 )
 
-type BotConfig map[string]interface{}
+type GenericKeyValue map[string]interface{}
+
+type BotConfig GenericKeyValue
 
 type Bot struct {
 	ID                int       `json:"id,omitempty"`
@@ -33,7 +35,7 @@ func (b Bots) FilterBy(bot Bot) Bots {
 	result := make(Bots, 0, len(b))
 	for i := range b {
 		if bot.ID != 0 && b[i].ID == bot.ID {
-			return Bots{bot}
+			return Bots{b[i]}
 		}
 		if bot.Name != "" && strings.Contains(strings.ToLower(b[i].Name), strings.ToLower(bot.Name)) {
 			result = append(result, bot)
