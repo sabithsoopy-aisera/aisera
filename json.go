@@ -17,6 +17,11 @@ func ToJSONReader(val any) io.Reader {
 	return &buf
 }
 
+func ToJSON(val any) []byte {
+	d, _ := json.Marshal(val)
+	return d
+}
+
 func JSONReaderToVal(r io.Reader, val any) error {
 	data, err := ioutil.ReadAll(r)
 	if err != nil {

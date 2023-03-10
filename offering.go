@@ -13,6 +13,7 @@ type Offerings interface {
 	Bots(ctx context.Context, filterCriteria Filter) (Bots, error)
 	CreateBot(ctx context.Context, bot Bot) (int, error)
 	DeleteBot(ctx context.Context, id int) error
+	MapBotToChannel(ctx context.Context, botID int, channelIDs []int) error
 
 	//Channel operations
 	Channels(ctx context.Context, filterCriteria Filter) (Channels, error)
@@ -131,20 +132,30 @@ func (o offering) CreateChannel(ctx context.Context, channel Channel) (int, erro
 }
 
 func (o offering) DeleteChannel(ctx context.Context, id int) error {
-	req, err := http.NewRequestWithContext(ctx, http.MethodDelete, MustURL("/aisera/channels").String(), DeleteEntityRequest{
+	statusCode, err := o.delete(ctx, "/aisera/channels", DeleteEntityRequest{
 		EntityID: id,
-	}.JSONReader())
+	}.JSONReader(), nil, o.httpHeaders())
 	if err != nil {
 		return fmt.Errorf("error creating request: %w", err)
 	}
-	addHeaders(req, o.httpHeaders())
-	resp, err := Do(req)
-	if err != nil {
-		return fmt.Errorf("error deleting bot: %w", err)
+	if statusCode != http.StatusOK {
+		return fmt.Errorf("invalid status code: %d", statusCode)
 	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("invalid status code: %d", resp.StatusCode)
+	return nil
+}
+
+func (o offering) MapBotToChannel(ctx context.Context, botID int, channelIDs []int) error {
+	request := MappingRequest{
+		AddedEntityIds: channelIDs,
+		BotID:          botID,
+		EntityType:     "aisera.channel",
+	}
+	statusCode, err := o.post(ctx, "aisera/bots/mappings", ToJSONReader(request), nil, o.httpHeaders())
+	if err != nil {
+		return fmt.Errorf("error mapping bot: %w", err)
+	}
+	if statusCode != http.StatusOK {
+		return fmt.Errorf("invalid status code: %d", statusCode)
 	}
 	return nil
 }

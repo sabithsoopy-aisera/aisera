@@ -44,6 +44,12 @@ func (b Bots) FilterBy(bot Bot) Bots {
 	return result
 }
 
+type MappingRequest struct {
+	AddedEntityIds []int  `json:"addedEntityIds,omitempty"`
+	BotID          int    `json:"botId,omitempty"`
+	EntityType     string `json:"entityType,omitempty"`
+}
+
 type DeleteEntityRequest struct {
 	EntityID int `json:"entityId"`
 }

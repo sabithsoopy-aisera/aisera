@@ -36,6 +36,9 @@ func Parse(req *http.Request, val any) (int, error) {
 		return 0, err
 	}
 	defer resp.Body.Close()
+	if val == nil {
+		return resp.StatusCode, nil
+	}
 	return resp.StatusCode, JSONReaderToVal(resp.Body, val)
 }
 
