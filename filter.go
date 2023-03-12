@@ -17,6 +17,7 @@ type Criteria struct {
 }
 
 type Filter struct {
+	EntityId        int            `json:"entityId,omitempty"`
 	Fields          []string       `json:"fields,omitempty"`
 	Criteria        []Criteria     `json:"criteria,omitempty"`
 	SortCriteria    []SortCriteria `json:"sortCriteria,omitempty"`

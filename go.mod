@@ -6,6 +6,7 @@ require (
 	github.com/onsi/ginkgo/v2 v2.9.0
 	github.com/onsi/gomega v1.27.2
 	golang.org/x/exp v0.0.0-20230224173230-c95f2b4c22f2
+	golang.org/x/sync v0.1.0
 )
 
 require (

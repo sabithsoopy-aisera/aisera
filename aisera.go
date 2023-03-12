@@ -14,7 +14,7 @@ func URL(path string) (*url.URL, error) {
 	if val, ok := os.LookupEnv("AISERA_BASE_URL"); ok {
 		baseURL = val
 	}
-	return url.Parse(fmt.Sprintf("%s/%s", baseURL, strings.TrimPrefix(path, "/")))
+	return url.Parse(fmt.Sprintf("%s/%s", strings.TrimSuffix(baseURL, "/"), strings.TrimPrefix(path, "/")))
 }
 
 func MustURL(path string) *url.URL {

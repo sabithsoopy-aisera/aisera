@@ -44,6 +44,19 @@ func (b Bots) FilterBy(bot Bot) Bots {
 	return result
 }
 
+type JobParams struct {
+	BotID int `json:"bot_id"`
+}
+
+type RetrainRequest struct {
+	JobName   string    `json:"jobName"`
+	JobParams JobParams `json:"jobParams"`
+}
+
+func (r RetrainRequest) JSONReader() io.Reader {
+	return ToJSONReader(r)
+}
+
 type MappingRequest struct {
 	AddedEntityIds []int  `json:"addedEntityIds,omitempty"`
 	BotID          int    `json:"botId,omitempty"`

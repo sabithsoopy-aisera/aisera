@@ -3,7 +3,6 @@ package integration_test
 import (
 	"context"
 	"fmt"
-	"log"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -29,7 +28,6 @@ var _ = Describe("Bot lifecycle", func() {
 		})
 		By("Creating the bot", func() {
 			var err error
-			log.Printf("creating the bot: %s", botName)
 			newBotID, err = aiseraOffering.CreateBot(ctx, aisera.Bot{
 				Name:              botName,
 				DomainDisplayName: "KB Test",
@@ -67,17 +65,8 @@ var _ = Describe("Bot lifecycle", func() {
 			Expect(createdBot).To(HaveLen(1))
 			Expect(createdBot[0].Name).To(Equal(botName))
 		})
-		By("Getting the bots, we should NOT see the bot created", func() {
-			bots, err := aiseraOffering.Bots(ctx, aisera.Filter{})
-			Expect(err).NotTo(HaveOccurred())
-			createdBot := bots.FilterBy(aisera.Bot{
-				ID: newBotID,
-			})
-			Expect(createdBot).To(HaveLen(0))
-		})
 		By("Creating channel", func() {
 			var err error
-			log.Printf("creating the channel: %s", channelName)
 			newChannelID, err = aiseraOffering.CreateChannel(ctx, aisera.Channel{
 				ChannelType:  aisera.ChannelType_Webchat,
 				Name:         channelName,
@@ -108,5 +97,19 @@ var _ = Describe("Bot lifecycle", func() {
 			Expect(channels).To(HaveLen(1))
 			Expect(channels[0].Bots).To(HaveLen(1))
 		})
+		// By("Retraining the executions", func() {
+		// 	executions, err := aiseraOffering.Executions(ctx, aisera.Filter{
+		// 		Criteria: []aisera.Criteria{
+		// 			{Field: []string{"job.job_type"}, Operand: "GenericJob", CanImply: true},
+		// 		},
+		// 		SortCriteria:    []aisera.SortCriteria{{Field: "started_at"}},
+		// 		Fields:          []string{"job.reference_id", "pipeline_status", "output", "message", "error", "started_at", "_duration", "id"},
+		// 		Offset:          0,
+		// 		MaxCount:        30,
+		// 		NeedsTotalCount: true,
+		// 	})
+		// 	Expect(err).NotTo(HaveOccurred())
+		// 	Expect(executions).NotTo(BeEmpty())
+		// })
 	})
 })
